@@ -1,0 +1,8 @@
+logs
+.cache
+.config
+.idea
+*.jit
+*.mar
+.bash_history
+.python_history
