@@ -19,7 +19,7 @@ curl http://localhost:8080/predictions/facedetector -F "data=@grouping-1st-R-e14
 * 도커 빌드 : ./build_image.sh -g -cv cu101 -t jonggon/torchserve_opencv:0.0.0 하거나
   * 자세한 내용은 [여기](https://github.com/pytorch/serve/tree/master/docker)
 * 도커 PULL 한다
-  * 개인 저장소에 올려 놓음
+  * docker pull jonggon/torchserve_opencv
 
 * 도커 실행
   * bash start_front.sh : 확인용
