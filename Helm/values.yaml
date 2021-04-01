@@ -1,5 +1,3 @@
-# values for torchserve helm chart.
-
 torchserve_image: jonggon/torchserve_opencv:0.0.0
 
 namespace: torchserve
@@ -13,13 +11,11 @@ torchserve:
   n_cpu: 1
   memory_limit: 4Gi
   memory_request: 1Gi
-  args: torchserve --start  --ncs --ts-config /home/jonggon/TorchServing/config.properties \
-  --model-store /home/jonggon/TorchServing \
-  --models facedetector.mar \ 
-  --foreground
-
+  hostpath: home/jg/torchserve
+  args: ["torchserve", "--start",  "--ncs", "--ts-config", "--ts-config", "/home/hae/models/config.properties",
+          "--model-store", "/home/hae/models", "--models", "facedetector.mar", "--foreground"]
 deployment:
-  replicas: 2
+  replicas: 1
 
 persitant_volume:
   size: 1Gi

@@ -10,15 +10,15 @@ metadata:
     prometheus.io/port: '8082'
 spec:
   ports:
-  - name: preds
-    port: {{ .Values.torchserve.inference_port }}
-    targetPort: ts 
-  - name: mdl
-    port: {{ .Values.torchserve.management_port }}
-    targetPort: ts-management
-  - name: metrics
-    port: {{ .Values.torchserve.metrics_port }}
-    targetPort: ts-metrics
+    - name: preds
+      port: {{ .Values.torchserve.inference_port }}
+      targetPort: ts
+    - name: mdl
+      port: {{ .Values.torchserve.management_port }}
+      targetPort: ts-management
+    - name: metrics
+      port: {{ .Values.torchserve.metrics_port }}
+      targetPort: ts-metrics
   type: LoadBalancer
   selector:
     app: torchserve
@@ -40,29 +40,29 @@ spec:
         app: torchserve
     spec:
       volumes:
-      - name: persistent-storage
-        persistentVolumeClaim:
-          claimName: model-store-claim
+        - name: sharevolumes
+          hostPath:
+            path: {{ .Values.torchserve.hostpath }}
       containers:
-      - name: torchserve
-        image: {{ .Values.torchserve_image }}
-        args: {{ .Values.torchserve.args }} 
-        ports:
-        - name: ts
-          containerPort: {{ .Values.torchserve.inference_port }}
-        - name: ts-management
-          containerPort: {{ .Values.torchserve.management_port }}
-        - name: ts-metrics
-          containerPort: {{ .Values.torchserve.metrics_port }}
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-          - mountPath: {{ .Values.torchserve.pvd_mount }}
-            name: persistent-storage
-        resources:
-          limits:
-            cpu: {{ .Values.torchserve.n_cpu }}
-            memory: {{ .Values.torchserve.memory_limit }}
-            nvidia.com/gpu: {{ .Values.torchserve.n_gpu }}
-          requests:
-            cpu: {{ .Values.torchserve.n_cpu }}
-            memory: {{ .Values.torchserve.memory_request }}
+        - name: torchserve
+          image: {{ .Values.torchserve_image }}
+          args: {{ .Values.torchserve.args }}
+          ports:
+            - name: ts
+              containerPort: {{ .Values.torchserve.inference_port }}
+            - name: ts-management
+              containerPort: {{ .Values.torchserve.management_port }}
+            - name: ts-metrics
+              containerPort: {{ .Values.torchserve.metrics_port }}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: {{ .Values.torchserve.pvd_mount }}
+              name: sharevolumes
+          resources:
+            limits:
+              cpu: {{ .Values.torchserve.n_cpu }}
+              memory: {{ .Values.torchserve.memory_limit }}
+              nvidia.com/gpu: {{ .Values.torchserve.n_gpu }}
+            requests:
+              cpu: {{ .Values.torchserve.n_cpu }}
+              memory: {{ .Values.torchserve.memory_request }}

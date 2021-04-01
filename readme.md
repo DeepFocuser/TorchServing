@@ -26,10 +26,19 @@ curl http://localhost:8080/predictions/facedetector -F "data=@grouping-1st-R-e14
   * bash start_background.sh : 실제 서비스용
 
 >## ***쿠버네티스(microk8s) / 헬름(helm) 설치 및 실행***
+* microk8s 설치 : https://microk8s.io/docs
 * helm 설치 : microk8s enable helm3
-* 별명 달기 : sudo snap alias microk8s.helm3 helm
+  * 별명 달기 : sudo snap alias microk8s.helm3 helm
+* GPU 사용 가능하게 하기 : microk8s enable gpu
+* 가상 로드밸런서 설치 : microk8s enable metallb:10.64.140.43-10.64.140.49 ingress
 * 쿠버네티스 실행 : helm install facedetector Helm
-
+  * 결과 얻기
+    * kubectl get all 에서 EXTERNAL-IP 얻은 후,
+    ```cmd
+    curl http://EXTERNAL-IP:8080/predictions/facedetector -T grouping-1st-R-e1451909599172.jpg
+    curl http://EXTERNAL-IP:8080/predictions/facedetector -F "data=@grouping-1st-R-e1451909599172.jpg"
+    ```
+    
 >## ***환경***
 * ubuntu 18.04 LTS / cuda version : 10.1.243
 * python version : 3.6.9
