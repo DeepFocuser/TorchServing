@@ -26,6 +26,8 @@ curl http://localhost:8080/predictions/facedetector -F "data=@grouping-1st-R-e14
   * bash start_background.sh : 실제 서비스용
 
 >## ***쿠버네티스(microk8s) / 헬름(helm) 설치 및 실행***
+* helm 설치 : microk8s enable helm3
+* 별명 달기 : sudo snap alias microk8s.helm3 helm
 * 쿠버네티스 실행 : helm install facedetector Helm
 
 >## ***환경***
