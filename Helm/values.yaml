@@ -13,7 +13,7 @@ torchserve:
   n_cpu: 1
   memory_limit: 4Gi
   memory_request: 1Gi
-  args:  torchserve --start  --ncs --ts-config /home/jonggon/TorchServing/config.properties \
+  args: torchserve --start  --ncs --ts-config /home/jonggon/TorchServing/config.properties \
   --model-store /home/jonggon/TorchServing \
   --models facedetector.mar \ 
   --foreground
