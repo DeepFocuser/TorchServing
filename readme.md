@@ -25,6 +25,9 @@ curl http://localhost:8080/predictions/facedetector -F "data=@grouping-1st-R-e14
   * bash start_front.sh : 확인용
   * bash start_background.sh : 실제 서비스용
 
+>## ***쿠버네티스(microk8s) / 헬름(helm) 설치 및 실행***
+* 쿠버네티스 실행 : helm install --name facedetector .
+
 >## ***환경***
 * ubuntu 18.04 LTS / cuda version : 10.1.243
 * python version : 3.6.9
