@@ -1,5 +1,5 @@
 >## ***serving할 모델 만들기***
-torch-model-archiver --model-name facedetector --version 0.0.1 --serialized-file 512_512_ADAM_PCENTER_RES18-prepost-0021.jit --handler customhandler.py --extra-files index_to_name.json --force
+torch-model-archiver --model-name facedetector --version 0.0.0 --serialized-file 512_512_ADAM_PCENTER_RES18-prepost-0021.jit --handler customhandler.py --extra-files index_to_name.json --force
 
 >## ***실행하기***
 torchserve --start --ts-config config.properties --ncs --model-store . --models facedetector.mar

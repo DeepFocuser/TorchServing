@@ -43,10 +43,13 @@ spec:
         - name: sharevolumes
           hostPath:
             path: {{ .Values.torchserve.hostpath }}
+            type: Directory
       containers:
         - name: torchserve
           image: {{ .Values.torchserve_image }}
-          args: {{ .Values.torchserve.args }}
+          args: {{ range .Values.torchserve.args }}
+                 - {{ . }}
+                {{ end }}
           ports:
             - name: ts
               containerPort: {{ .Values.torchserve.inference_port }}

@@ -12,11 +12,7 @@ torchserve:
   memory_limit: 4Gi
   memory_request: 1Gi
   hostpath: /home/jg/torchserve
-  #  args: ["torchserve", "--start",  "--ncs", "--ts-config", "/home/hae/models/config.properties",
-  #          "--model-store", "/home/hae/models", "--models", "facedetector.mar"]
-  args: ["torchserve --start --ncs --ts-config /home/hae/models/config.properties --model-store /home/hae/models --models facedetector.mar", "--foreground"]
-deployment:
-  replicas: 1
+  args: ["torchserve", "--start",  "--ncs", "--ts-config", "/home/hae/models/config.properties", "--model-store", "/home/hae/models", "--models", "facedetector.mar", "--foreground"]
 
-#persitant_volume:
-#  size: 1Gi
+deployment:
+  replicas: 2
