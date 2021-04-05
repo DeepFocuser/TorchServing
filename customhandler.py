@@ -30,6 +30,16 @@ from ts.torch_handler.vision_handler import VisionHandler
 
 class CustomHandler(VisionHandler):
 
+    def __init__(self):
+
+        #super(CustomHandler, self).__init__()
+        super().__init__()
+        self.originheight = None
+        self.originwidth = None
+
+        self.targetheight = 512
+        self.targetwidth = 512
+
     def initialize(self, context):
         super().initialize(context)
 
@@ -65,12 +75,14 @@ class CustomHandler(VisionHandler):
             if isinstance(image, (bytearray, bytes)):
                 image = np.frombuffer(image, dtype=np.uint8)
                 image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-                image = cv2.resize(image, dsize=(512, 512), interpolation=cv2.INTER_AREA)
+                image = cv2.resize(image, dsize=(self.targetwidth, self.targetheight), interpolation=cv2.INTER_AREA)
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                 image = torch.FloatTensor(image)
             else:
                 # if the image is a list
                 image = torch.FloatTensor(image)
+
+            self.originheight, self.originwidth, _ = image.shape
 
             images.append(image)
         return torch.stack(images).to(self.device)
@@ -137,6 +149,16 @@ class CustomHandler(VisionHandler):
         for ids_, scores_, bboxes_ in zip(ids, scores, bboxes):
             result = []
             ids_pc, scores_pc, xmin, ymin, xmax, ymax = self.result_processing(ids_, scores_, bboxes_)
+
+            # from target image box size to origin image box size
+            x_scale = self.originwidth / self.targetwidth
+            y_scale = self.originheight / self.targetheight
+
+            xmin = x_scale * xmin
+            xmax = x_scale * xmax
+            ymin = y_scale * ymin
+            ymax = y_scale * ymax
+
             for id_, score_, xmi, ymi, xma, yma in zip(ids_pc.tolist(), scores_pc.tolist(), xmin.tolist(), ymin.tolist(), xmax.tolist(), ymax.tolist()):
                 info = {}
                 info[self.mapping[str(int(id_))]] = [xmi, ymi, xma, yma]
