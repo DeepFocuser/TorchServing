@@ -132,7 +132,7 @@ if __name__ == "__main__":
     parser.add_argument('--input', type=str, help="input image", default="sample.jpg")
     parser.add_argument('--output', type=str, help="output image or video", default="result.jpg")
     parser.add_argument('--classfile', type=str, help="class file", default="class.txt")
-    parser.add_argument('--thresh', type=float, help='visual threshold', default=0.7)
+    parser.add_argument('--thresh', type=float, help='visual threshold', default=0.5)
 
     parser.add_argument('--save', action='store_true', help="image or video save?")
     parser.add_argument('--show', action='store_true', help="image show?")
