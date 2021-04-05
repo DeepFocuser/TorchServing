@@ -30,7 +30,8 @@ curl http://localhost:8080/predictions/facedetector -F "data=@grouping-1st-R-e14
 * helm 설치 : microk8s enable helm3
   * 별명 달기 : sudo snap alias microk8s.helm3 helm
 * GPU 사용 가능하게 하기 : microk8s enable gpu
-* 가상 로드밸런서 설치 : microk8s enable metallb:10.64.140.43-10.64.140.49 ingress
+* 가상 로드밸런서 설치 : microk8s enable metallb:MY-IP-ADDRESS-MY-IP-ADDRESS ingress
+  * ex) microk8s enable metallb:192.168.35.240-192.168.35.240 ingress
 * 쿠버네티스 실행 : helm install facedetector Helm
   * 결과 얻기
     * kubectl get all 에서 EXTERNAL-IP 얻은 후,
