@@ -7,5 +7,5 @@
     ```cmd
     pip install opencv-python
     ```
-  * ex image ) python main.py --address 192.168.35.69:8000 --image sample.jpg --outimage result.mp4 --classfile class.txt --size 512 512 --thresh 0.1 --saveimage True
-  * ex video ) python main.py --address 192.168.35.69:8000 --video sample.mp4 --outvideo result.mp4 --classfile class.txt --size 512 512 --thresh 0.1 --savevideo True
+  * ex image ) python main.py --address 192.168.35.69:8000 --image sample.jpg --out_image result.mp4 --classfile class.txt --thresh 0.5 --save_image True
+  * ex video ) python main.py --address 192.168.35.69:8000 --video sample.mp4 --out_video result.mp4 --classfile class.txt --thresh 0.5 --save_video True

@@ -11,7 +11,7 @@ torchserve:
   n_cpu: 4
   memory_limit: 4Gi
   memory_request: 4Gi
-  hostpath: /home/jonggon/Desktop/TorchServing
+  hostpath: /home/jg/torchserve
   args: ["torchserve", "--start",  "--ncs", "--ts-config", "/home/hae/models/config.properties", "--model-store", "/home/hae/models", "--models", "facedetector.mar", "--foreground"]
 
 deployment:

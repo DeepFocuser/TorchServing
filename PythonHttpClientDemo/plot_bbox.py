@@ -109,7 +109,7 @@ def plot_bbox(img, bboxes, scores=None, ids=None, thresh=0.5,
                         org=(xmin + 7, ymin + 20), \
                         fontFace=cv2.FONT_HERSHEY_TRIPLEX, \
                         fontScale=0.5, \
-                        color=[255, 255, 255], \
+                        color=[0, 0, 0], \
                         thickness=1, bottomLeftOrigin=False)
 
     img = cv2.addWeighted(img, 0.5, copied_img, 0.5, 0)

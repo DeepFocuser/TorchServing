@@ -75,14 +75,13 @@ class CustomHandler(VisionHandler):
             if isinstance(image, (bytearray, bytes)):
                 image = np.frombuffer(image, dtype=np.uint8)
                 image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+                self.originheight, self.originwidth, _ = image.shape
+
                 image = cv2.resize(image, dsize=(self.targetwidth, self.targetheight), interpolation=cv2.INTER_AREA)
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                 image = torch.FloatTensor(image)
             else:
-                # if the image is a list
-                image = torch.FloatTensor(image)
-
-            self.originheight, self.originwidth, _ = image.shape
+                raise NotImplementedError
 
             images.append(image)
         return torch.stack(images).to(self.device)
