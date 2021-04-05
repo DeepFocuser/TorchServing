@@ -5,7 +5,7 @@
 > # **실행 방법**
   * 설치
     ```cmd
-    pip install opencv-python==4.1.1.26
+    pip install opencv-python
     ```
-  * python main.py --address 192.168.0.84:9999 --video sample.mp4 --output result.mp4 --classfile class.txt --size 960 544 --thresh 0.1 --save True
-
+  * ex image ) python main.py --address 192.168.35.69:8000 --image sample.jpg --outimage result.mp4 --classfile class.txt --size 512 512 --thresh 0.1 --saveimage True
+  * ex video ) python main.py --address 192.168.35.69:8000 --video sample.mp4 --outvideo result.mp4 --classfile class.txt --size 512 512 --thresh 0.1 --savevideo True
