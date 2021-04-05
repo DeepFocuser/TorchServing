@@ -124,20 +124,21 @@ if __name__ == "__main__":
     # https://greeksharifa.github.io/references/2019/02/12/argparse-usage/
     parser = argparse.ArgumentParser(description='python http client')
     parser.add_argument('--address', type=str, help="address:port", default="192.168.35.69:8080")
-    parser.add_argument('--image', type=str, help="input image", default="sample.jpg")
-    parser.add_argument('--video', type=str, help="input video", default="sample.mp4")
-
-    parser.add_argument('--out_image', type=str, help="output image", default="result.jpg")
-    parser.add_argument('--out_video', type=str, help="output video", default="result.mp4")
+    parser.add_argument('--input', type=str, help="input image", default="sample.jpg")
+    parser.add_argument('--output', type=str, help="output image or video", default="result.jpg")
     parser.add_argument('--classfile', type=str, help="class file", default="class.txt")
-
     parser.add_argument('--thresh', type=float, help='visual threshold', default=0.1)
+    parser.add_argument('--save', type=bool, help="image or video save?", default=True)
 
-    parser.add_argument('--save_image', type=bool, help="image save?", default=True)
-    parser.add_argument('--save_video', type=bool, help="video save?", default=True)
     args = parser.parse_args()
 
     URL = 'http://' + args.address + "/predictions/facedetector" # 이미지 분석 요청
-    RunHttpClientImage(input=args.image, output=args.out_image, classfile = args.classfile,thresh=args.thresh, save_image=args.save_image)
-    #RunHttpClient(input=args.image, output=args.out_video, classfile = args.classfile, thresh=args.thresh, save_video=args.save_video)
+
+    basename = os.path.basename(args.input)
+    ext = os.path.splitext(basename)[-1]
+
+    if ext.lower() in [".jpg", ".png", ".jpeg"]:
+        RunHttpClientImage(input=args.input, output=args.output, classfile = args.classfile,thresh=args.thresh, save_image=args.save)
+    elif ext in [".mp4", ".avi"]:
+        RunHttpClientVideo(input=args.input, output=args.output, classfile = args.classfile, thresh=args.thresh, save_video=args.save)
 
