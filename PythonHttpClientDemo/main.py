@@ -14,7 +14,7 @@ if os.path.isfile(logfilepath):
     os.remove(logfilepath)
 logging.basicConfig(filename=logfilepath, level=logging.INFO)
 
-def RunHttpClientImage(input="sample.jpg", output="result.jpg", classfile="class.txt", thresh=0.5, save_image=True):
+def RunHttpClientImage(input="sample.jpg", output="result.jpg", classfile="class.txt", thresh=0.5, save_image=True, show_image=True):
 
     try:
         class_names = np.loadtxt(classfile, dtype=str)
@@ -55,13 +55,15 @@ def RunHttpClientImage(input="sample.jpg", output="result.jpg", classfile="class
     plotted_image = plot_bbox(image, boxes, scores=scores, ids=ids, thresh=thresh, class_names = class_names)
     if save_image:
         cv2.imwrite(output, plotted_image)
-    cv2.imshow("image", plotted_image)
-    cv2.waitKey(0)
+
+    if show_image:
+        cv2.imshow("image", plotted_image)
+        cv2.waitKey(0)
 
     cv2.destroyAllWindows()
 
 
-def RunHttpClientVideo(input="sample.mp4", output="result.mp4", classfile="class.txt", thresh=0.5, save_video=True):
+def RunHttpClientVideo(input="sample.mp4", output="result.mp4", classfile="class.txt", thresh=0.5, save_video=True, show_image=True):
 
     try:
         class_names = np.loadtxt(classfile, dtype=str)
@@ -112,8 +114,10 @@ def RunHttpClientVideo(input="sample.mp4", output="result.mp4", classfile="class
             plotted_image = plot_bbox(image, boxes, scores=scores, ids=ids, thresh=thresh, class_names = class_names)
             if save_video:
                 out.write(plotted_image)
-            cv2.imshow("image", plotted_image)
-            cv2.waitKey(1)
+
+            if show_image:
+                cv2.imshow("image", plotted_image)
+                cv2.waitKey(1)
 
     cap.release()
     out.release()
@@ -122,13 +126,16 @@ def RunHttpClientVideo(input="sample.mp4", output="result.mp4", classfile="class
 if __name__ == "__main__":
 
     # https://greeksharifa.github.io/references/2019/02/12/argparse-usage/
+
     parser = argparse.ArgumentParser(description='python http client')
     parser.add_argument('--address', type=str, help="address:port", default="192.168.35.69:8080")
     parser.add_argument('--input', type=str, help="input image", default="sample.jpg")
     parser.add_argument('--output', type=str, help="output image or video", default="result.jpg")
     parser.add_argument('--classfile', type=str, help="class file", default="class.txt")
-    parser.add_argument('--thresh', type=float, help='visual threshold', default=0.1)
-    parser.add_argument('--save', type=bool, help="image or video save?", default=True)
+    parser.add_argument('--thresh', type=float, help='visual threshold', default=0.7)
+
+    parser.add_argument('--save', action='store_true', help="image or video save?")
+    parser.add_argument('--show', action='store_true', help="image show?")
 
     args = parser.parse_args()
 
@@ -138,7 +145,9 @@ if __name__ == "__main__":
     ext = os.path.splitext(basename)[-1]
 
     if ext.lower() in [".jpg", ".png", ".jpeg"]:
-        RunHttpClientImage(input=args.input, output=args.output, classfile = args.classfile,thresh=args.thresh, save_image=args.save)
+        RunHttpClientImage(input=args.input, output=args.output, classfile = args.classfile,thresh=args.thresh, save_image=args.save, show_image=args.show)
     elif ext in [".mp4", ".avi"]:
-        RunHttpClientVideo(input=args.input, output=args.output, classfile = args.classfile, thresh=args.thresh, save_video=args.save)
+        RunHttpClientVideo(input=args.input, output=args.output, classfile = args.classfile, thresh=args.thresh, save_video=args.save, show_image=args.show)
+    else:
+        raise NotImplementedError
 
