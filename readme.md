@@ -29,7 +29,7 @@ curl http://localhost:8080/predictions/facedetector -F "data=@grouping-1st-R-e14
 * microk8s 설치 : https://microk8s.io/docs
 * helm 설치 : microk8s enable helm3
   * 별명 달기 : sudo snap alias microk8s.helm3 helm
-* DNS 설치 : microk8s enable dns
+* dns, storage 설치 : microk8s enable dns storage
 * GPU 사용 가능하게 하기 : microk8s enable gpu
 * 가상 로드밸런서 설치 : microk8s enable metallb:MY-IP-ADDRESS-MY-IP-ADDRESS 
   * ex) microk8s enable metallb:192.168.35.240-192.168.35.240 
