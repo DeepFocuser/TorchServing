@@ -42,10 +42,10 @@ def RunHttpClientImage(input="sample.jpg", output="result.jpg", classfile="class
     object to send in the body of the :class:`Request`.
     '''
     _, data = cv2.imencode('.jpg', image)
-    respose = requests.post(URL, data=data.tobytes(order='C')).json()
+    response = requests.post(URL, data=data.tobytes(order='C')).json()
 
-    if respose:
-        for rb in respose:
+    if response:
+        for rb in response:
             ids.append(0)
             boxes.append(rb['faces'])
             scores.append(rb['score'])
@@ -102,9 +102,9 @@ def RunHttpClientVideo(input="sample.mp4", output="result.mp4", classfile="class
             object to send in the body of the :class:`Request`.
             '''
             _, data = cv2.imencode('.jpg', image)
-            respose = requests.post(URL, data=data.tobytes(order='C')).json()
-            if respose:
-                for rb in respose:
+            response = requests.post(URL, data=data.tobytes(order='C')).json()
+            if response:
+                for rb in response:
                     ids.append(0)
                     boxes.append(rb['faces'])
                     scores.append(rb['score'])
